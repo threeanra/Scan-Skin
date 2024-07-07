@@ -54,8 +54,15 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    //Coordinator Layout
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+
     //Glide for access image from internet
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //lifecycle
     implementation("androidx.activity:activity:1.8.0")

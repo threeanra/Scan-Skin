@@ -6,7 +6,6 @@ import android.graphics.ImageDecoder
 import android.media.Image
 import android.net.Uri
 import android.os.Build
-import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
 import org.tensorflow.lite.DataType
@@ -48,7 +47,7 @@ class ImageClassifierHelper(
                 optionsBuilder.build()
             )
         } catch (e: IllegalStateException) {
-            classifierListener?.onError("ayam")
+            classifierListener?.onError("Error occured while creating ImageClassifier: " + e.message)
             Log.e(TAG, e.message.toString())
         }
     }

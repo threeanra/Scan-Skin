@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.asclepius.data.network.response.ArticlesItem
 import com.dicoding.asclepius.databinding.ArticleCardBinding
+import com.dicoding.asclepius.databinding.ItemArticleBinding
 
 class ArticleAdapter : ListAdapter<ArticlesItem, ArticleAdapter.MyViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ArticleCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -22,14 +23,14 @@ class ArticleAdapter : ListAdapter<ArticlesItem, ArticleAdapter.MyViewHolder>(DI
         holder.bind(articles)
     }
 
-    class MyViewHolder(private val binding: ArticleCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(articles: ArticlesItem){
-            binding.titleArticle.text = articles.title
-            binding.descArticle.text = articles.description
+            binding.articleTitle.text = articles.title
+            binding.articleDate.text = articles.publishedAt
             if (articles.urlToImage != null) {
-                Glide.with(binding.imageArticle.context)
+                Glide.with(binding.articleImage.context)
                     .load(articles.urlToImage)
-                    .into(binding.imageArticle)
+                    .into(binding.articleImage)
             }
 
             binding.root.setOnClickListener {

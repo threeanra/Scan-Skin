@@ -4,45 +4,40 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dicoding.asclepius.data.network.response.ArticleResponse
+import androidx.lifecycle.viewModelScope
+import com.dicoding.asclepius.data.ResultState
 import com.dicoding.asclepius.data.network.response.ArticlesItem
 import com.dicoding.asclepius.data.network.retrofit.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class ArticleViewModel : ViewModel() {
-    private val _articles = MutableLiveData<List<ArticlesItem>>()
-    val articles: LiveData<List<ArticlesItem>> = _articles
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _articles = MutableLiveData<ResultState<List<ArticlesItem>>>()
+    val articles: LiveData<ResultState<List<ArticlesItem>>> = _articles
 
     init {
         getArticles()
     }
 
     private fun getArticles() {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getArticles(QUERY, CATEGORY, LANGUAGE)
-        client.enqueue(object : Callback<ArticleResponse> {
-            override fun onResponse(
-                call: Call<ArticleResponse>,
-                response: Response<ArticleResponse>
-            ) {
-                _isLoading.value = false
+        viewModelScope.launch {
+            _articles.value = ResultState.Loading
+            try {
+                val response = ApiConfig.getApiService().getArticles(QUERY, CATEGORY, LANGUAGE)
                 if (response.isSuccessful) {
-                    _articles.value = response.body()?.articles?.filterNotNull()
+                    val articles = response.body()?.articles?.filterNotNull()
+                    if (!articles.isNullOrEmpty()) {
+                        _articles.value = ResultState.Success(articles)
+                    } else {
+                        _articles.value = ResultState.Error("No articles found")
+                    }
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    _articles.value = ResultState.Error(response.message())
                 }
+            } catch (e: Exception) {
+                _articles.value = ResultState.Error(e.message ?: "Unknown Error")
+                Log.e(TAG, "getArticles: ${e.message}", e)
             }
-
-            override fun onFailure(call: Call<ArticleResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
+        }
     }
 
     companion object{

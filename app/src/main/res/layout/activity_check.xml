@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/theme"
+            android:backgroundTint="@color/main_color"
             android:text="Choose from gallery"
             android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:backgroundTint="@color/theme"
+            android:backgroundTint="@color/main_color"
             android:minWidth="0dp"
             app:icon="@drawable/baseline_camera_alt_24"
             app:iconPadding="0dp" />
@@ -74,7 +74,7 @@
 
     <Button
         android:id="@+id/analyzeButton"
-        android:backgroundTint="@color/theme"
+        android:backgroundTint="@color/main_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

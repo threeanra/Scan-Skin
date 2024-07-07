@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.ui
+package com.dicoding.asclepius.ui.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.dicoding.asclepius.databinding.ActivityResultBinding
+import com.dicoding.asclepius.ui.check.CheckActivity
+import com.dicoding.asclepius.ui.MainActivity
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding

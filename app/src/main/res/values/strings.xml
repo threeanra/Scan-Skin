@@ -1,5 +1,10 @@
 <resources>
+
+    <!--    Home-->
     <string name="app_name">Asclepius</string>
+    <string name="title_desc">Let\'s check your skin health!</string>
+    <string name="greeting">Good Morning</string>
+    <string name="fullname">Trian Radis Pengestu</string>
     <string name="camera_x">CameraX</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
@@ -9,5 +14,7 @@
     <string name="desc">Application that can make it easier for you to detect skin cancer</string>
     <string name="splash_title"><b><i>Asclepius</i></b></string>
     <string name="splash_desc"><i>Skin Cancer Detection</i></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

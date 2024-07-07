@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.ui
+package com.dicoding.asclepius.ui.check
 
 import android.Manifest
 import android.content.Intent
@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.dicoding.asclepius.databinding.ActivityCheckBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
+import com.dicoding.asclepius.ui.detail.ResultActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications

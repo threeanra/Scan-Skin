@@ -19,13 +19,13 @@
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".ui.CheckActivity"
+            android:name=".ui.check.CheckActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ResultActivity"
+            android:name=".ui.detail.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
