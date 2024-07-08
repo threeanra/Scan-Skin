@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/image_preview" />
+            tools:src="@drawable/article_image_preview" />
 
         <TextView
             android:id="@+id/articleTitle"
@@ -43,7 +43,7 @@
             tools:text="Lorem ipsum dolor sit amet" />
 
         <TextView
-            android:id="@+id/articleDate"
+            android:id="@+id/articleAuthor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/articleTitle"
-            tools:text="Published At :" />
+            tools:text="@string/author" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

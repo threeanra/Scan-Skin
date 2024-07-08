@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:background="@color/background_color"
+    tools:context=".ui.result.ResultActivity">
 
     <TextView
         android:id="@+id/titleResult"
@@ -18,55 +19,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/result_image"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_height="400dp"
-        app:layout_constraintTop_toBottomOf="@+id/titleResult"
-        app:srcCompat="@drawable/ic_place_holder"
-        tools:layout_editor_absoluteX="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <!--progress bar implementation-->
+
+        <!--Text implementation in center of the progress bar-->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/resultIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="false"
+            android:visibility="visible"
+            app:indicatorColor="@color/main_color"
+            android:layout_centerHorizontal="true"
+            app:trackThickness="10dp"
+            app:indicatorSize="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trackColor="#C1C1C1" />
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="---"
+            android:textColor="@color/main_color"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
         android:gravity="start|center"
-        app:layout_constraintTop_toBottomOf="@+id/result_image">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/titleResult"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="20dp">
 
         <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/baseline_list_alt_24"/>
+            android:src="@drawable/baseline_list_alt_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:text="Your Diagnoze : "
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginStart="12dp"/>
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/result_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="@string/result"
-            />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:weightSum="2"

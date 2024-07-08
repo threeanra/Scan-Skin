@@ -14,15 +14,14 @@ class ArticleViewModel : ViewModel() {
     private val _articles = MutableLiveData<ResultState<List<ArticlesItem>>>()
     val articles: LiveData<ResultState<List<ArticlesItem>>> = _articles
 
-    init {
-        getArticles()
-    }
+    private val _articles2 = MutableLiveData<ResultState<List<ArticlesItem>>>()
+    val articles2: LiveData<ResultState<List<ArticlesItem>>> = _articles2
 
-    private fun getArticles() {
+    fun getTopArticles() {
         viewModelScope.launch {
             _articles.value = ResultState.Loading
             try {
-                val response = ApiConfig.getApiService().getArticles(QUERY, CATEGORY, LANGUAGE)
+                val response = ApiConfig.getApiService().getTopArticles(QUERY)
                 if (response.isSuccessful) {
                     val articles = response.body()?.articles?.filterNotNull()
                     if (!articles.isNullOrEmpty()) {
@@ -40,10 +39,31 @@ class ArticleViewModel : ViewModel() {
         }
     }
 
+    fun getArticles() {
+        viewModelScope.launch {
+            _articles2.value = ResultState.Loading
+            try {
+                val response = ApiConfig.getApiService().getArticles(QUERY)
+                if (response.isSuccessful) {
+                    val articles2 = response.body()?.articles?.filterNotNull()
+                    if (!articles2.isNullOrEmpty()) {
+                        _articles2.value = ResultState.Success(articles2)
+                    } else {
+                        _articles2.value = ResultState.Error("No articles found")
+                    }
+                } else {
+                    _articles2.value = ResultState.Error(response.message())
+                }
+            } catch (e: Exception) {
+                _articles2.value = ResultState.Error(e.message ?: "Unknown Error")
+                Log.e(TAG, "getArticles: ${e.message}", e)
+            }
+        }
+    }
+
     companion object{
         private const val TAG = "ArticleViewModel"
         private const val QUERY = "cancer"
         private const val CATEGORY = "health"
-        private const val LANGUAGE = "en"
     }
 }

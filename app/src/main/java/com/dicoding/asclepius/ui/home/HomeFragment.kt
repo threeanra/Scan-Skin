@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
 
         binding.tvGreeting.text = getGreeting()
 
+        viewModel.getTopArticles()
         viewModel.articles.observe(this) { response ->
             when (response) {
                 is ResultState.Loading -> {
@@ -72,7 +73,7 @@ class HomeFragment : Fragment() {
     private fun setArticle(items: List<ArticlesItem>) {
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvArticle.layoutManager = layoutManager
-        val adapter = ArticleAdapter()
+        val adapter = ArticleAdapter(requireContext())
         adapter.submitList(items)
         binding.rvArticle.adapter = adapter
     }

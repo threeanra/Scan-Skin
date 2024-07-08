@@ -16,8 +16,9 @@
             android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:paddingBottom="60dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -290,7 +291,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Articles"
+                android:text="Hot News"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_bold"

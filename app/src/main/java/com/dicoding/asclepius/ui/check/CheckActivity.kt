@@ -6,15 +6,18 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityCheckBinding
 import com.dicoding.asclepius.helper.ImageClassifierHelper
-import com.dicoding.asclepius.ui.detail.ResultActivity
+import com.dicoding.asclepius.helper.getImageUri
+import com.dicoding.asclepius.ui.result.ResultActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.task.vision.classifier.Classifications
@@ -51,28 +54,66 @@ class CheckActivity : AppCompatActivity() {
         }
 
         binding.apply {
+            imgBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+                finish()
+            }
             galleryButton.setOnClickListener { startGallery() }
-            cameraButton.setOnClickListener {
-                showToast("Camera not implemented yet!")
-            }
-
+            cameraButton.setOnClickListener { startCamera() }
+            resetButton.setOnClickListener { reset() }
             analyzeButton.setOnClickListener{
-                currentImageUri?.let {
-                    analyzeImage(it)
-                }?: showToast("No image selected")
+                binding.analyzeButton.apply {
+                    isEnabled = false
+                    text = "Please wait..."
+                }
+                lifecycleScope.launch(Dispatchers.IO) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        currentImageUri?.let {
+                            analyzeImage(it)
+                        }
+                    }, 3000)
+                }
             }
+        }
+
+    }
+
+    private fun reset() {
+        currentImageUri = null
+        binding.apply {
+            previewImageView.setImageResource(R.drawable.image_preview)
+            analyzeButton.text = "Analyze"
+            resetButton.isEnabled = false
+            analyzeButton.isEnabled = false
+            cameraButton.isEnabled = true
+            galleryButton.isEnabled = true
+        }
+    }
+    private fun startCamera() {
+        currentImageUri = getImageUri(this)
+        launcherIntentCamera.launch(currentImageUri!!)
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (isSuccess) {
+            showImage()
         }
     }
 
     private fun startGallery() {
-        // TODO: Mendapatkan gambar dari Gallery.
-        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        launcherGallery.launch(arrayOf("image/*"))
     }
     private val launcherGallery = registerForActivityResult(
-        ActivityResultContracts.PickVisualMedia()
+        ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
             showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
@@ -85,6 +126,10 @@ class CheckActivity : AppCompatActivity() {
             Log.d("Image URI", "showImage: $it")
             if (currentImageUri != null) {
                 binding.previewImageView.setImageURI(it)
+                binding.analyzeButton.isEnabled = true
+                binding.resetButton.isEnabled = true
+                binding.cameraButton.isEnabled = false
+                binding.galleryButton.isEnabled = false
             }
         }
     }
@@ -101,26 +146,31 @@ class CheckActivity : AppCompatActivity() {
                 override fun onResults(results: List<Classifications>?) {
                     val resultString = results?.joinToString("\n") {
                         val threshold = (it.categories[0].score * 100).toInt()
-                        "${it.categories[0].label} ${threshold}%"
+                        "${it.categories[0].label}${threshold}%"
                     }
+
+                    val threshold = (results!![0].categories[0].score * 100).toInt()
+                    Log.d("Threshold", "onResults: $threshold")
+
                     if (resultString != null) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             this@CheckActivity.runOnUiThread {
-                                moveToResult(image, resultString)
+                                moveToResult(image, resultString, threshold)
                             }
                         }
                     }
                 }
             }
         )
-
         imageHelper.classifyStaticImage(image)
+        binding.analyzeButton.text = "Finish"
     }
 
-    private fun moveToResult(image:Uri, result: String){
+    private fun moveToResult(image:Uri, result: String, threshold: Int){
         val intent = Intent(this, ResultActivity::class.java)
         intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, image.toString())
         intent.putExtra(ResultActivity.EXTRA_RESULT, result)
+        intent.putExtra(ResultActivity.EXTRA_THRESHOLD, threshold)
         startActivity(intent)
     }
     private fun showToast(message: String) {

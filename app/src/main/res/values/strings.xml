@@ -5,6 +5,7 @@
     <string name="title_desc">Let\'s check your skin health!</string>
     <string name="greeting">Good Morning</string>
     <string name="fullname">Trian Radis Pengestu</string>
+    <string name="author">Author : %s</string>
     <string name="camera_x">CameraX</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
@@ -17,4 +18,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--    Check Activity-->
+    <string name="title_warning">Please Insert Image</string>
+    <string name="desc_warning">Make sure the image is identical to the skin and clearly visible</string>
 </resources>
