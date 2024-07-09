@@ -1,7 +1,6 @@
 package com.dicoding.asclepius.ui.result
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,18 +10,19 @@ import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityResultBinding
 import com.dicoding.asclepius.ui.check.CheckActivity
 import com.dicoding.asclepius.ui.MainActivity
+import com.dicoding.asclepius.ui.consultation.ConsultActivity
 
 @Suppress("DEPRECATION")
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
     private var i = 0
     private var resultText: String? = null
+    private var resultDetail : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TODO: Menampilkan hasil gambar, prediksi, dan confidence score.
         val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
         imageUri?.let {
             Log.d("Image URI", "showImage: $it")
@@ -31,16 +31,28 @@ class ResultActivity : AppCompatActivity() {
 
         resultText = intent.getStringExtra(EXTRA_RESULT)
         val threshold = intent.getIntExtra(EXTRA_THRESHOLD, 0)
-        Log.d("threshold", "onCreate: $threshold")
-        binding.resultText.text = resultText
+        resultDetail = "$resultText $threshold%"
+        Log.d("Result Detail", "onCreate: $resultDetail")
+
+        if (resultText!!.contains("Non")) {
+            binding.textDesc.text = getString(R.string.non_cancer_desc)
+        } else {
+            binding.textDesc.text = getString(R.string.cancer_desc)
+        }
 
         binding.apply {
-            checkAgainButton.setOnClickListener {
-                val intent = Intent(this@ResultActivity, CheckActivity::class.java)
-                startActivity(intent)
+            imgBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+                finish()
             }
             homeButton.setOnClickListener {
                 val intent = Intent(this@ResultActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            consultButton.setOnClickListener {
+                val intent = Intent(this@ResultActivity, ConsultActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -49,7 +61,9 @@ class ResultActivity : AppCompatActivity() {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 if (i <= threshold) {
-                    binding.progressText.text = i.toString() + "%"
+                    binding.progressNumber.text = "$i%"
+                    binding.progressNumber.setTextColor(getProgressColor(i))
+                    binding.progressText.text = resultText
                     binding.progressText.setTextColor(getProgressColor(i))
                     binding.resultIndicator.progress = i
                     binding.resultIndicator.setIndicatorColor(getProgressColor(i))
@@ -65,11 +79,11 @@ class ResultActivity : AppCompatActivity() {
     private fun getProgressColor(progress: Int): Int {
         return when {
 //            resultText!!.contains("Non") || progress in 0..9 -> Color.parseColor("#00FF00") // Green for non-cancer
-            resultText!!.contains("Non") || progress in 0..9 -> resources.getColor(R.color.main_color) // Green for non-cancer
-            progress in 10..49 -> Color.parseColor("#0000FF") // Blue
-            progress in 50..80 -> Color.parseColor("#FFA500") // Orange
-            progress in 81..100 -> resources.getColor(R.color.red, theme) // Red
-            else -> resources.getColor(R.color.red, theme) // Default color
+            resultText!!.contains("Non") || progress in 0..9 -> resources.getColor(R.color.green) // Green for non-cancer
+            progress in 10..49 -> resources.getColor(R.color.main_color)
+            progress in 50..80 -> resources.getColor(R.color.orange)
+            progress in 81..100 -> resources.getColor(R.color.red)
+            else -> resources.getColor(R.color.main_color, theme) // Default color
         }
     }
 

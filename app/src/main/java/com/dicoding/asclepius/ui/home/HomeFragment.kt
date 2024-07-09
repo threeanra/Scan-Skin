@@ -1,6 +1,7 @@
 package com.dicoding.asclepius.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,8 @@ import com.dicoding.asclepius.adapter.ArticleAdapter
 import com.dicoding.asclepius.data.ResultState
 import com.dicoding.asclepius.data.network.response.ArticlesItem
 import com.dicoding.asclepius.databinding.FragmentHomeBinding
+import com.dicoding.asclepius.ui.check.CheckActivity
+import com.dicoding.asclepius.ui.consultation.ConsultActivity
 import com.dicoding.asclepius.viewmodel.ArticleViewModel
 import java.util.Calendar
 
@@ -31,7 +34,21 @@ class HomeFragment : Fragment() {
     ): View? {
        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.tvGreeting.text = getGreeting()
+        binding.apply {
+            tvGreeting.text = getGreeting()
+            cardConsultation.setOnClickListener {
+                startActivity(Intent(requireContext(), ConsultActivity::class.java))
+            }
+            notification.setOnClickListener {
+                showToast("Coming Soon")
+            }
+            cardOther.setOnClickListener {
+                showToast("Coming Soon")
+            }
+            checkNowButton.setOnClickListener {
+                startActivity(Intent(requireContext(), CheckActivity::class.java))
+            }
+        }
 
         viewModel.getTopArticles()
         viewModel.articles.observe(this) { response ->
@@ -42,11 +59,7 @@ class HomeFragment : Fragment() {
 
                 is ResultState.Error -> {
 //                    showLoading(false)
-                    Toast.makeText(
-                        requireContext(),
-                        response.error,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(response.error)
                 }
 
                 is ResultState.Success -> {
@@ -85,6 +98,10 @@ class HomeFragment : Fragment() {
 //            binding.progressBar.visibility = View.GONE
 //        }
 //    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

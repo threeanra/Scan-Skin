@@ -66,22 +66,21 @@
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/imageCard"
+                    android:id="@+id/notification"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_alignEnd="@+id/textGreeting"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:elevation="1dp"
                     app:cardCornerRadius="155dp">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:padding="15dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/bell_24"
-                        tools:ignore="SpeakableTextPresentCheck" />
+                        android:src="@drawable/bell_24" />
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
@@ -129,9 +128,12 @@
                             android:textStyle="bold" />
 
                         <Button
+                            android:id="@+id/checkNowButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/button_style_2"
                             android:backgroundTint="@color/white"
+                            app:backgroundTint="@color/white"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:text="Check Now"
                             android:textColor="@color/main_color" />

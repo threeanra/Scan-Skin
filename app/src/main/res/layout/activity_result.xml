@@ -7,31 +7,72 @@
     android:background="@color/background_color"
     tools:context=".ui.result.ResultActivity">
 
+    <RelativeLayout
+        android:id="@+id/layoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="10dp"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="11dp"
+                android:src="@drawable/back_button" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardHistory"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="10dp"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="11dp"
+                app:tint="@color/main_color"
+                android:src="@drawable/bookmark_24" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/titleResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Result"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Analysis Result"
+        android:textSize="30sp"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="@+id/layoutButton"
+        app:layout_constraintTop_toBottomOf="@+id/layoutButton" />
 
 
     <RelativeLayout
         android:id="@+id/progress_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/titleResult">
 
-        <!--progress bar implementation-->
-
-        <!--Text implementation in center of the progress bar-->
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/resultIndicator"
             android:layout_width="match_parent"
@@ -47,51 +88,69 @@
             app:layout_constraintTop_toTopOf="parent"
             app:trackColor="#C1C1C1" />
 
-        <TextView
-            android:id="@+id/progress_text"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="---"
-            android:textColor="@color/main_color"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/progress_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="@color/main_color"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/progress_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non Cancer"
+                android:textColor="@color/main_color"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="start|center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/titleResult"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="20dp">
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/transparent_main_color"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/progress_layout">
 
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/baseline_list_alt_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="Your Diagnoze : "
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/result_text"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/result"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:alpha="0.7"
+                android:fontFamily="@font/poppins_medium"
+                android:justificationMode="inter_word"
+                android:text="Result desc" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -101,29 +160,31 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
-        android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/checkAgainButton"
-            android:layout_width="match_parent"
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/main_color"
-            android:text="Check again"
-            android:textStyle="bold" />
+            app:icon="@drawable/home_24"
+            android:backgroundTint="@color/white"
+            app:backgroundTint="@color/white"
+            app:iconTint="@color/main_color"
+            android:background="@drawable/button_style_2"
+            app:iconPadding="0dp"
+            android:minWidth="0dp" />
 
         <Button
-            android:id="@+id/homeButton"
-            android:layout_width="match_parent"
+            android:id="@+id/consultButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/button_style"
             android:layout_weight="1"
-            android:backgroundTint="@color/main_color"
-            android:text="Home"
+            android:text="Consultation"
             android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

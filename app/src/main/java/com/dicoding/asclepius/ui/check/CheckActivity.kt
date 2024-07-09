@@ -145,8 +145,8 @@ class CheckActivity : AppCompatActivity() {
 
                 override fun onResults(results: List<Classifications>?) {
                     val resultString = results?.joinToString("\n") {
-                        val threshold = (it.categories[0].score * 100).toInt()
-                        "${it.categories[0].label}${threshold}%"
+//                        val threshold = (it.categories[0].score * 100).toInt()
+                        "${it.categories[0].label}"
                     }
 
                     val threshold = (results!![0].categories[0].score * 100).toInt()
@@ -163,7 +163,7 @@ class CheckActivity : AppCompatActivity() {
             }
         )
         imageHelper.classifyStaticImage(image)
-        binding.analyzeButton.text = "Finish"
+        binding.analyzeButton.text = "Done"
     }
 
     private fun moveToResult(image:Uri, result: String, threshold: Int){

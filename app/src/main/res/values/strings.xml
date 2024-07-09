@@ -7,18 +7,17 @@
     <string name="fullname">Trian Radis Pengestu</string>
     <string name="author">Author : %s</string>
     <string name="camera_x">CameraX</string>
-    <string name="camera">Kamera</string>
-    <string name="gallery">Galeri</string>
-    <string name="analyze">Analyze</string>
-    <string name="result">Hasil Analisis</string>
-    <string name="title">Lorem ipsum dolor sit amet</string>
-    <string name="desc">Application that can make it easier for you to detect skin cancer</string>
     <string name="splash_title"><b><i>Asclepius</i></b></string>
     <string name="splash_desc"><i>Skin Cancer Detection</i></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--    Check Activity-->
     <string name="title_warning">Please Insert Image</string>
     <string name="desc_warning">Make sure the image is identical to the skin and clearly visible</string>
+    <string name="analyze">Analyze</string>
+
+    <!--    Result Activity-->
+    <string name="cancer_desc">Although our preliminary results show that there are indications of skin cancer, it is very important to remain calm and understand that this is just the first step in the detection process.
+        \n\nPlease consult a doctor for treatment and further information.</string>
+    <string name="non_cancer_desc">The result of our analysis shows that your skin is not cancerous, your skin looks healthy. \n\n
+        Don\'t forget to take care of your health.</string>
 </resources>
