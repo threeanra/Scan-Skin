@@ -20,4 +20,10 @@
         \n\nPlease consult a doctor for treatment and further information.</string>
     <string name="non_cancer_desc">The result of our analysis shows that your skin is not cancerous, your skin looks healthy. \n\n
         Don\'t forget to take care of your health.</string>
+
+    <!--    Login-->
+    <string name="login">Login</string>
+    <string name="email_error_message">Input Email Correctly</string>
+    <string name="email"><font size="38">Email</font></string>
+    <string name="password"><font size="38">Password</font></string>
 </resources>
