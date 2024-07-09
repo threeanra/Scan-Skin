@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.dicoding.asclepius"
+    namespace = "com.tearsdr0p.scanskin"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.dicoding.asclepius"
+        applicationId = "com.tearsdr0p.scanskin"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

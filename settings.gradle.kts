@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Asclepius"
+rootProject.name = "ScanSkin"
 include(":app")
  

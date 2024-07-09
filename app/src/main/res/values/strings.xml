@@ -1,7 +1,7 @@
 <resources>
 
     <!--    Home-->
-    <string name="app_name">Asclepius</string>
+    <string name="app_name">ScanSkin</string>
     <string name="title_desc">Let\'s check your skin health!</string>
     <string name="greeting">Good Morning</string>
     <string name="fullname">Trian Radis Pengestu</string>
