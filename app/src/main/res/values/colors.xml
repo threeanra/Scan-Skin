@@ -10,5 +10,6 @@
     <color name="background_color">#EBEBEB</color>
     <color name="transparent_red">#26DB2316</color>
     <color name="transparent_main_color">#26000DFF</color>
-    <color name="red">#FF0000</color>
+    <color name="text_color_secondary">#757575</color>
+    <color name="red">#DB2316</color>
 </resources>

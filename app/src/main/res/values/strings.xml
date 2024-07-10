@@ -24,6 +24,17 @@
     <!--    Login-->
     <string name="login">Login</string>
     <string name="email_error_message">Input Email Correctly</string>
-    <string name="email"><font size="38">Email</font></string>
-    <string name="password"><font size="38">Password</font></string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+    <!--    Profile-->
+    <string name="imageprofile">imagePerson</string>
+    <string name="nameProfile">Your Name</string>
+    <string name="emailProfile">youremail@email.com</string>
+    <string name="about_us">Tentang Kami</string>
+    <string name="profile_detail">Ubah Profil</string>
+    <string name="logout">Keluar</string>
+    <string name="message_dialog">Apakah anda yakin ingin keluar?</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Iya</string>
 </resources>

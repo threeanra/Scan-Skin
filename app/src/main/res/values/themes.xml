@@ -4,8 +4,6 @@
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/main_color</item>
 <!--        <item name="android:windowContentOverlay">@null</item>-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="Theme.Asclepius" parent="Base.Theme.Asclepius" />
