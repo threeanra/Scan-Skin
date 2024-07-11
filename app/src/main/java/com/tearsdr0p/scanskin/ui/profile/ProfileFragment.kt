@@ -7,15 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.tearsdr0p.scanskin.R
 import com.tearsdr0p.scanskin.databinding.FragmentHomeBinding
 import com.tearsdr0p.scanskin.databinding.FragmentProfileBinding
 import com.tearsdr0p.scanskin.factory.ViewModelFactory
+import com.tearsdr0p.scanskin.ui.aboutus.AboutUsActivity
 import com.tearsdr0p.scanskin.ui.login.LoginActivity
 import com.tearsdr0p.scanskin.ui.onboarding.AuthViewModel
 
@@ -40,17 +43,26 @@ class ProfileFragment : Fragment() {
             viewProfile.setOnClickListener {
                 Toast.makeText(requireContext(), "Coming Soon", Toast.LENGTH_SHORT).show()
             }
-//            viewAboutUs.setOnClickListener {
-//                val intent = Intent(requireContext(), AboutUsActivity::class.java)
-//                startActivity(intent)
-//            }
+            viewAboutUs.setOnClickListener {
+                val intent = Intent(requireContext(), AboutUsActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         viewModel.getUser().observe(viewLifecycleOwner) { user ->
             binding.emailProfile.text = user.email
         }
 
+        setStatusBarColor(R.color.main_color)
+
         return binding.root
+    }
+
+    private fun setStatusBarColor(colorResId: Int) {
+        activity?.window?.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = ContextCompat.getColor(requireContext(), colorResId)
+        }
     }
 
     private fun showLogoutDialog() {

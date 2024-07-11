@@ -31,10 +31,15 @@
     <string name="imageprofile">imagePerson</string>
     <string name="nameProfile">Your Name</string>
     <string name="emailProfile">youremail@email.com</string>
-    <string name="about_us">Tentang Kami</string>
-    <string name="profile_detail">Ubah Profil</string>
-    <string name="logout">Keluar</string>
-    <string name="message_dialog">Apakah anda yakin ingin keluar?</string>
-    <string name="no">Tidak</string>
-    <string name="yes">Iya</string>
+    <string name="about_us">About Us</string>
+    <string name="profile_detail">Change Profile</string>
+    <string name="logout">Logout</string>
+    <string name="message_dialog">Are you sure want to logout?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+
+    <!--    History-->
+    <string name="delete">Delete</string>
+    <string name="delete_message">Are you sure want to delete this history?</string>
+
 </resources>

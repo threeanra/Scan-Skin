@@ -38,15 +38,19 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:cardCornerRadius="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_alignParentEnd="true">
 
             <ImageView
                 android:id="@+id/history"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:padding="11dp"
-                app:tint="@color/main_color"
-                android:src="@drawable/bookmark_24" />
+                android:src="@drawable/bookmark_24"
+                app:tint="@color/main_color" />
 
         </androidx.cardview.widget.CardView>
 

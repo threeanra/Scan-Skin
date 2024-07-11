@@ -2,14 +2,19 @@ package com.tearsdr0p.scanskin.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tearsdr0p.scanskin.R
 import com.tearsdr0p.scanskin.adapter.ArticleAdapter
 import com.tearsdr0p.scanskin.data.ResultState
 import com.tearsdr0p.scanskin.data.network.response.ArticlesItem
@@ -37,6 +42,12 @@ class HomeFragment : Fragment() {
             cardConsultation.setOnClickListener {
                 startActivity(Intent(requireContext(), ConsultActivity::class.java))
             }
+            cardHospital.setOnClickListener {
+                showToast("Coming Soon")
+            }
+            cardMedicine.setOnClickListener {
+                showToast("Coming Soon")
+            }
             notification.setOnClickListener {
                 showToast("Coming Soon")
             }
@@ -52,22 +63,42 @@ class HomeFragment : Fragment() {
         viewModel.articles.observe(this) { response ->
             when (response) {
                 is ResultState.Loading -> {
-//                  showLoading(true)
+                  showLoading(true)
                 }
 
                 is ResultState.Error -> {
-//                    showLoading(false)
+                    showLoading(false)
                     showToast(response.error)
                 }
 
                 is ResultState.Success -> {
-//                    showLoading(false)
+                    showLoading(false)
                     setArticle(response.data)
                 }
             }
         }
 
+        setTransparentStatusBar()
+
         return binding.root
+    }
+
+    private fun setTransparentStatusBar() {
+        activity?.window?.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_color)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                decorView.systemUiVisibility = decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
     }
 
     private fun getGreeting(): String {
@@ -89,13 +120,13 @@ class HomeFragment : Fragment() {
         binding.rvArticle.adapter = adapter
     }
 
-//    private fun showLoading(isLoading: Boolean) {
-//        if (isLoading) {
-//            binding.progressBar.visibility = View.VISIBLE
-//        } else {
-//            binding.progressBar.visibility = View.GONE
-//        }
-//    }
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.loading.visibility = View.VISIBLE
+        } else {
+            binding.loading.visibility = View.GONE
+        }
+    }
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

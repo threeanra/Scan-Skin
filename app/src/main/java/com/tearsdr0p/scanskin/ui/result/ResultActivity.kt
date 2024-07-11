@@ -6,13 +6,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import com.tearsdr0p.scanskin.R
+import com.tearsdr0p.scanskin.data.local.room.HistoryEntity
 import com.tearsdr0p.scanskin.databinding.ActivityResultBinding
+import com.tearsdr0p.scanskin.factory.ViewModelFactory
 import com.tearsdr0p.scanskin.ui.MainActivity
 import com.tearsdr0p.scanskin.ui.consultation.ConsultActivity
+import com.tearsdr0p.scanskin.utils.convertMillsToDateString
 
 @Suppress("DEPRECATION")
 class ResultActivity : AppCompatActivity() {
+
+    private var imageUri: Uri? = null
+
+    private val viewModel: ResultViewModel by viewModels {
+        ViewModelFactory.getInstance(application)
+    }
     private lateinit var binding: ActivityResultBinding
     private var i = 0
     private var resultText: String? = null
@@ -22,7 +33,7 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
+        imageUri = Uri.parse(intent.getStringExtra(EXTRA_IMAGE_URI))
         imageUri?.let {
             Log.d("Image URI", "showImage: $it")
 //            binding.resultImage.setImageURI(it)
@@ -30,7 +41,7 @@ class ResultActivity : AppCompatActivity() {
 
         resultText = intent.getStringExtra(EXTRA_RESULT)
         val threshold = intent.getIntExtra(EXTRA_THRESHOLD, 0)
-        resultDetail = "$resultText $threshold%"
+        resultDetail = "$resultText$threshold%"
         Log.d("Result Detail", "onCreate: $resultDetail")
 
         if (resultText!!.contains("Non")) {
@@ -54,6 +65,9 @@ class ResultActivity : AppCompatActivity() {
                 val intent = Intent(this@ResultActivity, ConsultActivity::class.java)
                 startActivity(intent)
             }
+            history.setOnClickListener {
+               saveHistory()
+            }
         }
 
         val handler = Handler()
@@ -73,6 +87,18 @@ class ResultActivity : AppCompatActivity() {
                 }
             }
         }, 5)
+    }
+
+    private fun saveHistory() {
+        val time = System.currentTimeMillis()
+        val dateFormat = convertMillsToDateString(time)
+        val history = HistoryEntity(
+            title = resultDetail,
+            image = imageUri.toString(),
+            time = dateFormat
+        )
+        viewModel.insertHistory(history)
+        Toast.makeText(this@ResultActivity, "History succesfully added", Toast.LENGTH_SHORT).show()
     }
 
     private fun getProgressColor(progress: Int): Int {

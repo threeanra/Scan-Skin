@@ -116,7 +116,7 @@
             app:layout_constraintTop_toBottomOf="@+id/login" />
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/loginGoogle"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="20dp"

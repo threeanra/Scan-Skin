@@ -1,12 +1,17 @@
 package com.tearsdr0p.scanskin.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.lifecycle.lifecycleScope
+import com.tearsdr0p.scanskin.R
 import com.tearsdr0p.scanskin.data.local.model.User
 import com.tearsdr0p.scanskin.data.pref.UserPreferences
 import com.tearsdr0p.scanskin.data.pref.dataStore
@@ -25,6 +30,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         pref = UserPreferences.getInstance(dataStore)
+        showDialog()
+
+        binding.loginGoogle.setOnClickListener {
+            showDialog()
+        }
 
         binding.login.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
@@ -58,6 +68,23 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun showDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_login, null)
+
+        val builder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent) //to make alert dialog rounded corner
+
+        dialogView.findViewById<Button>(R.id.btnClose).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
     }
 
     private fun showLoading(isLoading: Boolean) {
