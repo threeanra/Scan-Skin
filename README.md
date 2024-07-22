@@ -17,10 +17,8 @@ Scan Skin was originally one of the assignments from the Dicoding course “Bela
 ## How To Use it?
 - Clone this repository to your local machine
 - Check build.gradle.kts file
-```json 
-{
-    buildConfigField("String", "API_KEY", "\"YOUR_API_KEY\"")
-}
+```bash 
+buildConfigField("String", "API_KEY", "\"YOUR_API_KEY\"")
 ```
 Replace "YOUR_API_KEY" with your key (if you don't have it, you can generate the key [here](https://newsapi.org/register)
 - Run the Project
