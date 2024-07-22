@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "API_KEY", "\"001de1bb154249d79119d684032f87d8\"")
+        buildConfigField("String", "API_KEY", "\"YOUR_API_KEY\"")
         buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
