@@ -8,7 +8,7 @@ Scan Skin was originally one of the assignments from the Dicoding course “Bela
 ## Features
 - Splash Screen
 - Login
-- Saving user history login to data store
+- Saving User History Login To Data Store
 - Article News Related to Cancer
 - View Article
 - View & Save History
